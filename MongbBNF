@@ -1,0 +1,100 @@
+<statement> ::= <db-token> <db-aux> || <use-token> <dbName-token> 
+
+<db-aux> ::=   . <collection_idf> . <function> | epsilon 
+
+<function> ::= insert_token (  <request>  )   | find_token   (  <request>  )  | remove_token ( <request>  )   | update_token (  <pars_update>  )
+
+
+<pars_update>  ::=  <request> , <set>
+
+<setaux> ::= <clause_list> } | $set : <request> } 
+
+ <set> ::=  { <setaux> 
+
+<request> ::= { <clause-list> } | epsilon
+
+<clause-list> ::= <clause>  <clause-inter>
+
+
+<clause-inter> ::=  <comma-token> <clause-list> | epsilon
+
+<clause> ::= <expression-logic-clause> | <leaf-clause> |  <text-clause> |  <comment-clause>
+
+
+<comment-clause> ::= { <comment-operator> : <string> }
+
+<text-clause> ::= { <text-operator> : { <search-operator> : <string> } } | 
+                  { <text-operator> : { <search-operator> : <string> , <language-operator> : <language> } }
+
+
+<expression-logic-clause> ::=  <logic-operator> : [ <expression-list> ] 
+
+<expression-list> ::= <request> <expression-inter>
+
+<expression-inter> ::= , <expression-list> | epsilon
+
+<logic-operator> ::= <or-operator> | 
+                    <nor-operator>
+
+
+
+<leaf-clause> ::= <key> :  <value>
+
+
+<key> ::=  <id-token> 
+
+<value> ::= <operator-object> | <leaf-value>
+
+
+
+<leaf-value> ::= <string_token> | <number-token>  | <array> | { <aux> 
+
+
+<aux> ::= <operator-object> || <document>                  
+
+<operator-object> ::=  <operator-list> }
+
+<operator-list> ::= <operators> <operator-inter> 
+
+<operator-inter> ::= , <key> : { <operator-list> | epsilon 
+  
+<operators> ::= <value-operator> : <leaf-value> } | <array-operator> : [ <leaf-value-list> ]  | <not-operator> : <operator>  |  <elemmatch-operator> : <expression> }
+
+
+<value-operator> ::= <gt-operator> | 
+                     <gte-operator> | 
+                     <lt-operator> | 
+                     <lte-operator> | 
+                     <eq-operator> | 
+                     <ne-operator> |
+                     <type-operator> | 
+                     <size-operator> |
+                     <regex-operator> | 
+                     <exists-operator>
+
+
+
+<document> ::= <attributs-list> }
+
+
+<comment-clause> ::= { <comment-operator> : <string> }
+
+
+<array-operator> ::= <in-operator> |  <nin-operator> 
+                      
+
+
+
+<attributs-list> ::= <attributs> <attributs-inter>
+
+<attributs-inter> ::= , <attributs-list> | epsilon
+
+
+<attributs> ::= <key> : <leaf-value>
+
+<array> ::= [ <leaf-value-list> ]
+
+<leaf-value-list> ::= <leaf-value> <leaf-inter>
+
+<leaf-inter> ::= , <leaf-value-list> | epsilon
+                     
